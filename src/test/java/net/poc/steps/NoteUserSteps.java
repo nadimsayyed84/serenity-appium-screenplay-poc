@@ -48,9 +48,6 @@ public class NoteUserSteps {
 
 	@Given("that (.*) has a mobile containing SPApp installed$")
 	public void that_linda_has_a_mobile_containing_SPApp_installed(String actorName) {
-		
-//		theActorCalled(actorName).can(BrowseTheWeb.with(herMobileDevice));
-//		Actor persona=Actor.named(actorName);
 		theActorCalled(actorName).can(BrowseTheWeb.with(herMobileDevice));
 		theActorInTheSpotlight().attemptsTo(Start.with());
 	}

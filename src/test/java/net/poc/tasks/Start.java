@@ -2,40 +2,51 @@ package net.poc.tasks;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
-import java.net.URL;
+import org.hamcrest.Matcher;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import net.poc.ui.NotesWelcomePage;
+import net.serenitybdd.core.pages.WebElementState;
 import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.conditions.Check;
 import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.Step;
 
 public class Start implements Task{
-
+	Target partnercatagory = Target.the("partnercatagory").locatedBy("//*[@name='Food']");
+	Target next = Target.the("next").locatedBy("//*[@name='NEXT']");
+	static Target getstarted = Target.the("getstarted").locatedBy("//*[@name='GET STARTED']");
+	String getstarttext="GET STARTED";
 	@Step("{0} Clicking Partner catagories @SP services")
 	@Override
 	public <T extends Actor> void performAs(T actor) {
 		// TODO Auto-generated method stub
-		Target partnercatagory = Target.the("partnercatagory").locatedBy("//*[@name='Food']");
-		Target next = Target.the("next").locatedBy("//*[@name='NEXT']");
-		Target getstarted = Target.the("getstarted").locatedBy("//*[@name='GET STARTED']");
+		
 		
 		actor.attemptsTo(
+//				Enter.theValue(stationName).into(stationDropdown),
 				Click.on(next),
 				Click.on(next),
 				Click.on(next),
-				Click.on(getstarted),
-				Click.on(partnercatagory));
+//				Check.whether(gettingstartbtn(), containsText(getstarttext)).Click.on(getstarted),
+				Check.whether(thePartnercatagoryIsVisible()).andIfSo(Click.on(partnercatagory)));
 	}
 
-	 public static Start with() {
+	private Question<Boolean> thePartnercatagoryIsVisible() {
+        return actor -> partnercatagory.resolveFor(actor).isCurrentlyVisible();
+    }
+	
+	public static Question<String> gettingstartbtn() {
+        return actor -> getstarted.resolveFor(actor).getText();
+    }
+	
+//	private Matcher<String> theActstartText() {
+//        return actor -> getstarttext;
+//    }
+	
+	public static Start with() {
 	        return instrumented(Start.class);
-	    }
+	}
 }
