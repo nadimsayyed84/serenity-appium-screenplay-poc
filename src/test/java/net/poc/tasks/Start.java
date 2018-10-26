@@ -25,8 +25,8 @@ public class Start implements Task{
 	Target partnercatagory = Target.the("partnercatagory").locatedBy("//*[@name='Food']");
 	Target next = Target.the("next").locatedBy("//*[@name='NEXT']");
 	static Target getstarted = Target.the("getstarted").locatedBy("//*[@name='GET STARTED']");
-	static Target Housekeeping = Target.the("category").locatedBy("//*[@name='House-keeping']");
-	static Target partnerlisting = Target.the("partnerlisting").locatedBy("//*[contains(text(),'House-keeping')]");
+//	static Target Housekeeping = Target.the("category").locatedBy("//*[@name='House-keeping']");
+//	static Target partnerlisting = Target.the("partnerlisting").locatedBy("//*[contains(text(),'House-keeping')]");
 	String getstarttext="GET STARTED";
 
 	@Step("{0} Clicking Partner catagories @SP services")
@@ -45,8 +45,9 @@ public class Start implements Task{
 //				WaitUntil.the(partnercatagory, isVisible()),
 //				Check.whether(gettingstartbtn(), containsText(getstarttext)).Click.on(getstarted),
 				Check.whether(thePartnercatagoryIsVisible()).andIfSo(Click.on(getstarted)),
-				getpartner.partnerlist(next),
-				Click.on(partnerlisting));
+				getpartner.partnerlist(next)//,
+//				Click.on(partnerlisting)
+				);
 			
 	}
 
