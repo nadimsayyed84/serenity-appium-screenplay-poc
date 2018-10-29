@@ -14,29 +14,29 @@ import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.annotations.Step;
 
 public class getpartnerlist  implements Interaction {
-    private final Target target;
+    private Target target;
 
 	@Step("{0} fetch list of partners")
 	@Override
 	public <T extends Actor> void performAs(T actor) {
-		// TODO Auto-generated method stub
-//		List<IOSElement> PartnerList= driver.findElements(By.xpath("//*[contains(@name,'arrow')]"));
-//		System.out.println("Partner List Count: " + PartnerList.size());
-//		List<Target> t=(List<Target>) Target.the("arrow").locatedBy("//*[contains(@name,'arrow')]");
-		System.out.println("Count of Arrows:");
-		List<WebElementFacade> t=BrowseTheWeb.as(actor).findAll(By.xpath("//*[@name='Food']"));
-		System.out.println("Target count is: " + t.size());
-		System.out.printf("%n" + "TAG name is: " + t.get(0).getTagName());
-//		System.out.println("TAG name is: " + t.get(0).getTagName());
-		t.get(0).click();
-//		System.out.println("Target element name is: " + target.getName());
-//		actor.attemptsTo(Check.whether(theNextButtonIsVisible()));
+//		System.out.println("Count of Arrows:");
+//		List<WebElementFacade> t=BrowseTheWeb.as(actor).findAll(By.xpath("//*[@name='Food']"));
+//		System.out.println("Target count is: " + t.size());
+//		System.out.printf("%n" + "TAG name is: " + t.get(0).getTagName());
+//		t.get(0).click();
+		
+		List<WebElementFacade> PartnerList= BrowseTheWeb.as(actor).findAll(By.xpath("//*[contains(@name,'arrow')]"));
+		System.out.println("Partner List Count: " + PartnerList.size());
 	}
 
 	public getpartnerlist(Target target) {
         this.target = target;
     }
 
+
+	public getpartnerlist() {}
+	
+	
 	private Question<Boolean> theNextButtonIsVisible() {
         return actor -> target.resolveFor(actor).isCurrentlyVisible();
     }

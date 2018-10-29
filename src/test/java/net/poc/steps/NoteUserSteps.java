@@ -1,5 +1,6 @@
 package net.poc.steps;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -10,9 +11,11 @@ import net.poc.questions.Application;
 import net.poc.questions.factory.NoteDashboard;
 import net.poc.tasks.AddANote;
 import net.poc.tasks.AddNotes;
+import net.poc.tasks.CheckoutServices;
 import net.poc.tasks.See;
 import net.poc.tasks.Start;
 import net.poc.tasks.TryAdd;
+import net.poc.tasks.getpartner;
 import net.poc.ui.NotesWelcomePage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
@@ -21,6 +24,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.targets.Target;
 import net.poc.questions.DetailNote;
+import net.poc.questions.partnerdetails;
 import net.thucydides.core.annotations.Managed;
 
 import org.openqa.selenium.By;
@@ -52,6 +56,34 @@ public class NoteUserSteps {
 		theActorInTheSpotlight().attemptsTo(Start.with());
 	}
 
+	@When("^She click on category$")
+	public void She_click_on_category(DataTable category) {
+		String catg=category.raw().get(0).get(0);
+		theActorInTheSpotlight().attemptsTo(CheckoutServices.with(catg));
+	}
+	
+	@Then("^See Partner count$")
+	public void See_Partner_count() {
+		theActorInTheSpotlight().attemptsTo(getpartner.partnerlist());
+	}
+
+
+    @When("^find the partner \"([^\"]*)\"$")
+    public void find_the_partner(String partnername) {
+        theActorInTheSpotlight().should(
+                seeThat(new partnerdetails(partnername).thePartnerName(), is(partnername))
+        );
+    }	
+	
+    
+    @Then("^match the amount \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void match_the_amount(double amt,String partnername) {
+        theActorInTheSpotlight().should(
+                seeThat(new partnerdetails(partnername).theAmt(), is(amt))
+        );
+    }
+    
+    
     @When("^s?he creates a note with valid and complete information$")
     public void createsANoteWithValidAndCompleteInformation() {
         this.note = new Note.NoteBuilder().called("Test Note").

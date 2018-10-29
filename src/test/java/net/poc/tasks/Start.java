@@ -25,15 +25,13 @@ public class Start implements Task{
 	Target partnercatagory = Target.the("partnercatagory").locatedBy("//*[@name='Food']");
 	Target next = Target.the("next").locatedBy("//*[@name='NEXT']");
 	static Target getstarted = Target.the("getstarted").locatedBy("//*[@name='GET STARTED']");
-//	static Target Housekeeping = Target.the("category").locatedBy("//*[@name='House-keeping']");
+	static Target Food = Target.the("category").locatedBy("//*[@name='House-keeping']");
 //	static Target partnerlisting = Target.the("partnerlisting").locatedBy("//*[contains(text(),'House-keeping')]");
 	String getstarttext="GET STARTED";
 
 	@Step("{0} Clicking Partner catagories @SP services")
 	@Override
 	public <T extends Actor> void performAs(T actor) {
-//		WebElement deleteButton = BrowseTheWeb.as(actor).findBy("//*[@name='NEXT']");
-//		System.out.println(deleteButton.getAttribute("name"));
 		actor.attemptsTo(
 //				Enter.theValue(stationName).into(stationDropdown),
 //				Enter.theValue(thingToDo).into(NewTodoForm.NEW_TODO_FIELD).thenHit(Keys.RETURN),
@@ -44,9 +42,8 @@ public class Start implements Task{
 				Click.on(next),
 //				WaitUntil.the(partnercatagory, isVisible()),
 //				Check.whether(gettingstartbtn(), containsText(getstarttext)).Click.on(getstarted),
-				Check.whether(thePartnercatagoryIsVisible()).andIfSo(Click.on(getstarted)),
-				getpartner.partnerlist(next)//,
-//				Click.on(partnerlisting)
+				Check.whether(thePartnercatagoryIsVisible()).andIfSo(Click.on(getstarted))//,
+				//getpartner.partnerlist(next),
 				);
 			
 	}
@@ -58,10 +55,6 @@ public class Start implements Task{
 	public static Question<String> gettingstartbtn() {
         return actor -> getstarted.resolveFor(actor).getText();
     }
-	
-//	private Matcher<String> theActstartText() {
-//        return actor -> getstarttext;
-//    }
 	
 	public static Start with() {
 	        return instrumented(Start.class);
