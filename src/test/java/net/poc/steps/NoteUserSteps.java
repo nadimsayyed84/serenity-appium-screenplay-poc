@@ -15,11 +15,13 @@ import net.poc.tasks.CheckoutServices;
 import net.poc.tasks.See;
 import net.poc.tasks.Start;
 import net.poc.tasks.TryAdd;
+import net.poc.tasks.chrometask;
 import net.poc.tasks.getpartner;
 import net.poc.ui.NotesWelcomePage;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.targets.Target;
@@ -42,6 +44,12 @@ public class NoteUserSteps {
 
     @Managed(driver = "Appium")
     public WebDriver herMobileDevice;
+    
+    
+    @Managed(driver = "chrome")
+    public WebDriver hischrome;
+    
+
     private Note note = new Note();
     List<Note> notes = new ArrayList<>();
 
@@ -81,6 +89,20 @@ public class NoteUserSteps {
         theActorInTheSpotlight().should(
                 seeThat(new partnerdetails(partnername).theAmt(), is(amt))
         );
+    }
+    
+    
+    @Given("the (.*) launch ford link \"([^\"]*)\"$")
+    public void launch_ford_link(String actorname,String url) {
+    	theActorCalled(actorname).can(BrowseTheWeb.with(hischrome)).attemptsTo(Open.url(url));
+    }
+    
+    
+    @When("^Click on Book button$")
+    public void Click_on_Book_button() {
+        this.note = new Note.NoteBuilder().called("Test Note").
+                withDescription("Description Test").build();
+        theActorInTheSpotlight().attemptsTo(chrometask.to());
     }
     
     
